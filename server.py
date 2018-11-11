@@ -74,7 +74,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 
     def loop(self):
         """Sends camera images in an infinite loop."""
-        sio = io.BytesIO()
+        sio = io.StringIO()
 
         if args.use_usb:
             _, frame = camera.read()
