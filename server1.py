@@ -11,7 +11,7 @@ import threading
 import webbrowser
 import cv2
 import numpy as np
-import Image
+from PIL import Image
 
 # allow the camera to warmup
 time.sleep(0.1)
