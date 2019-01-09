@@ -103,7 +103,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             blob = cv2.dnn.blobFromImage(image, size=(672, 384), ddepth=cv2.CV_8U)
             net.setInput(blob)
             out = net.forward()
-            newString = out[1].tostring()
+            newString = out[0].tostring()
 
             # Draw detected faces on the frame
             for detection in out.reshape(-1, 7):
