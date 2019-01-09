@@ -94,8 +94,9 @@ class WebSocket(tornado.websocket.WebSocketHandler):
         else:
 
             frame = camera.capture(sio, "jpeg", use_video_port=True)
+            data = np.fromstring(sio.getvalue(), dtype=np.uint8)
 
-            image = np.array(frame)
+            image = cv2.imdecode(data, 1)
 
             # Prepare input blob and perform an inference
             blob = cv2.dnn.blobFromImage(image, size=(672, 384), ddepth=cv2.CV_8U)
