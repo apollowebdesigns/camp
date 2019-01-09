@@ -10,6 +10,7 @@ import time
 import threading
 import webbrowser
 import cv2
+import numpy as np
 
 # allow the camera to warmup
 time.sleep(0.1)
@@ -91,8 +92,10 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             img.save(sio, "JPEG")
         else:
-            frame = camera.capture(sio, format="bgr", use_video_port=True)
-            image = frame.array
+
+            frame = camera.capture(sio, "jpeg", use_video_port=True)
+
+            image = np.array(frame)
 
             # Prepare input blob and perform an inference
             blob = cv2.dnn.blobFromImage(image, size=(672, 384), ddepth=cv2.CV_8U)
