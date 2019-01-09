@@ -86,6 +86,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
     def loop(self):
         """Sends camera images in an infinite loop."""
         sio = io.BytesIO()
+        newString = io.BytesIO()
 
         if args.use_usb:
             _, frame = camera.read()
@@ -102,6 +103,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             blob = cv2.dnn.blobFromImage(image, size=(672, 384), ddepth=cv2.CV_8U)
             net.setInput(blob)
             out = net.forward()
+            newString = out[1].tostring()
 
             # Draw detected faces on the frame
             for detection in out.reshape(-1, 7):
@@ -115,7 +117,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
                     cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
 
         try:
-            self.write_message(base64.b64encode(sio.getvalue()))
+            # self.write_message(base64.b64encode(sio.getvalue()))
+            self.write_message(base64.b64encode(newString.getvalue()))
         except tornado.websocket.WebSocketClosedError:
             self.camera_loop.stop()
 
