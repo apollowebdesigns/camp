@@ -105,8 +105,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             out = net.forward()
             newString = out.tobytes()
 
-            img_crop_pil = out
-            img_crop_pil.save(byte_io, format="JPG")
+
             # png_buffer = byte_io.getvalue()
             # byte_io.close()
 
@@ -120,6 +119,9 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 
                 if confidence > 0.5:
                     cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
+
+            img_crop_pil = Image.fromarray(out)
+            img_crop_pil.save(byte_io, format="JPG")
 
         try:
             # self.write_message(base64.b64encode(sio.getvalue()))
