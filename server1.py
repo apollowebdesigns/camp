@@ -105,8 +105,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             blob = cv2.dnn.blobFromImage(image, size=(672, 384), ddepth=cv2.CV_8U)
             net.setInput(blob)
             out = net.forward()
-            print('what is the type?')
-            print(type(out))
+            print('what is the image?')
+            print(type(image))
 
 
             # png_buffer = byte_io.getvalue()
@@ -125,7 +125,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
                     cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
             #img_crop_pil = Image.fromarray(out)
             # img_crop_pil = Image.fromarray(out.astype('uint8'), 'RGB')
-            testbytes = out.tobytes()
+            # TODO no error but no image
+            testbytes = image.tobytes()
             byte_io = io.BytesIO(testbytes)
             # img_crop_pil.save(byte_io, "JPEG")
 
