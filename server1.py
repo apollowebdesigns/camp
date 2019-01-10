@@ -106,7 +106,6 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             out = net.forward()
             print('what is the type?')
             print(type(out))
-            newString = out.tobytes()
 
 
             # png_buffer = byte_io.getvalue()
@@ -124,7 +123,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
                     cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
             print(data.shape)
             img_crop_pil = Image.fromarray(out)
-            img_crop_pil.save(byte_io, format="JPG")
+            img_crop_pil.save(byte_io, "JPEG")
 
         try:
             # self.write_message(base64.b64encode(sio.getvalue()))
