@@ -124,11 +124,13 @@ class WebSocket(tornado.websocket.WebSocketHandler):
                     cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
             #img_crop_pil = Image.fromarray(out)
             # img_crop_pil = Image.fromarray(out.astype('uint8'), 'RGB')
+            testbytes = out.tobytes()
+            byte_io = io.BytesIO(testbytes)
             # img_crop_pil.save(byte_io, "JPEG")
 
         try:
-            self.write_message(base64.b64encode(sio.getvalue()))
-            # self.write_message(base64.b64encode(byte_io.getvalue()))
+            # self.write_message(base64.b64encode(sio.getvalue()))
+            self.write_message(base64.b64encode(byte_io.getvalue()))
         except tornado.websocket.WebSocketClosedError:
             self.camera_loop.stop()
 
