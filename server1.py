@@ -126,8 +126,9 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             #img_crop_pil = Image.fromarray(out)
             # img_crop_pil = Image.fromarray(out.astype('uint8'), 'RGB')
             # TODO no error but no image
-            testbytes = image.tobytes()
-            byte_io = io.BytesIO(testbytes)
+            ret, jpeg = cv2.imencode('.jpg', image)
+            testbytes = jpeg.tobytes()
+            # byte_io = io.BytesIO(testbytes)
             # img_crop_pil.save(byte_io, "JPEG")
 
         try:
