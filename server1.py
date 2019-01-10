@@ -122,7 +122,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
                 if confidence > 0.5:
                     cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
             print(data.shape)
-            img_crop_pil = Image.fromarray(out)
+            #img_crop_pil = Image.fromarray(out)
+            img_crop_pil = Image.fromarray(out.astype('uint8'), 'RGB')
             img_crop_pil.save(byte_io, "JPEG")
 
         try:
