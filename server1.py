@@ -104,6 +104,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             blob = cv2.dnn.blobFromImage(image, size=(672, 384), ddepth=cv2.CV_8U)
             net.setInput(blob)
             out = net.forward()
+            print('what is the type?')
+            print(type(out))
             newString = out.tobytes()
 
 
@@ -120,7 +122,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 
                 if confidence > 0.5:
                     cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
-
+            print(data.shape)
             img_crop_pil = Image.fromarray(out)
             img_crop_pil.save(byte_io, format="JPG")
 
